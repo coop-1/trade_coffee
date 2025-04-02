@@ -12,8 +12,8 @@ Workflow
 - dbt models to build `dim_customer_acquisition` (dimensional table) and `cube_customer_transaction_behavior` tables (olap cube table)
 
 Models
-- dim_customer_acquisition --> normalize customers across subs and non subs to show "points of entry" to Trade; ie. provides a lookup for customer acquisition
-- cube_customer_transaction_behavior --> table to allow for drill down / drill across aggregated transaction behavior; ie. we can identify users that were acquired via subscription a year ago that are still purchasing alacart or gifts
+- `dim_customer_acquisition` --> normalize customers across subs and non subs to show "points of entry" to Trade; ie. provides a lookup for customer acquisition
+- `cube_customer_transaction_behavior` --> table to allow for drill down / drill across aggregated transaction behavior; ie. we can identify users that were acquired via subscription a year ago that are still purchasing alacart or gifts
 
 
 ######## Part 2 Investigating Revenue Changes ########
