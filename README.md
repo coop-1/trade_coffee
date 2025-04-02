@@ -3,7 +3,7 @@
 @@ Note @@ see `customers_transactions_data_models.ipynb` notebook for workflow / `customers_transactions_dbt` directory for dbt project
 
 Tooling
-- randomly generated raw data sets - `customers.cs` / `transactions.csv` / `subscription_state_changes.csv`
+- randomly generated raw data sets - `customers.csv` / `transactions.csv` / `subscription_state_changes.csv`
 - using duckdb to locally host db (in memory / persisted)
 - dbt for transformation on raw data sets
 
