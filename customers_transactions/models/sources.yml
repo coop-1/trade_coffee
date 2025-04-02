@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: customers_transactions_db
+    schema: main
+    description: "raw data from duckdb"
+    tables:
+      - name: customers
+      - name: transactions
+      - name: subscription_state_changes

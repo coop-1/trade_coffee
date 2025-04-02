@@ -1,0 +1,88 @@
+##########################################################
+Part 1 Data Modeling for Cohort Analysis
+##########################################################
+
+Tooling
+- randomly generated raw data sets - customers / transactions / subscription_state_changes
+- using duckdb to locally host db (in memory / persisted)
+- dbt for transformation on raw data sets
+
+Workflow
+- load raw data sets into duckdb tables
+- dbt models to build dim_customer_acquisition (dimensional table) and cube_customer_transaction_behavior tables (olap cube table)
+
+Models
+- dim_customer_acquisition --> normalize customers across subs and non subs to show "points of entry" to Trade; ie. provides a lookup for customer acquisition
+- cube_customer_transaction_behavior --> table to allow for drill down / drill across aggregated transaction behavior; ie. we can identify users that were acquired via subscription a year ago that are still purchasing alacart or gifts
+
+##########################################################
+Part 2 Investigating Revenue Changes
+##########################################################
+
+
+"FP&A team has been able to identify that the net revenue in the first month of
+a customer’s lifetime has decreased significantly in the last year for customers acquired via subscription – in Q1 of 2025, the first month’s net revenue is $10, compared with $20 in Q1 of 2024.
+
+Understand the drivers of the YoY change"
+
+
+- Get detail on all possible discounts
+	- "Welcome offer discount" --> how many new users are receiving offer (if not all)?
+	- Prepaid discounts --> how many users are prepaying 3, 6, etc. orders?
+
+- Are users downsizing on bag types? --> from big bag to standard
+
+- Are users changing "coffee profile" (the combination of method / caffeination / roasting / flavor / grind)? --> different combinations affect price; ex. from balanced / complex (higher price point) to classic
+
+- How does the "unsatisfied return" replacement function as it relates to revenue - is Trade eating that cost? Does that contribute to net revenue or is it a different accounting treatment?
+
+To begin investigation would need:
+
+Data Sets
+- Discount offerings metadata
+- Reversal transactions detail
+- Coffee profile / pricing metadata
+** data modeling will be required to properly structure coffee profile dimensional model - each combination (or groups of combinations) should map to an ID and gross price **
+
+Attribution
+- Defined relations with subscription purchased via existing transactions data set for discount offerings metadata / coffee profile metadata --> ie. discount_id / product_id
+- Defined relation with reversal detail from transactions total --> ie. reversal_id
+
+Investigation / Process
+- Add discount_id / product_id / reversal_id to existing transactions data set
+- Join on discount offerings metadata / profile metadata / reversals transactions detail
+- "True Up" the revenue to confirm net plus the above discounts match gross (assume gross sits in coffee profile metadata)
+- Join to cube_customer_transaction_behavior model
+	- gross revenue to see plug between net and gross
+	- coffee profile metadata to establish a "price point segment" --> additional modeling may have to happen prior to join to normalize price points to make data consumable
+- Now having access to month over month discounts and subscription type (coffee profile metadata) will allow you to determine purchase trends
+
+##########################################################
+Part 3 Infrastructure Design
+##########################################################
+
+
+ELT Medallion Architecture
+- Data is moved from Source Systems / Data Producers via Stitch to Data Lake (S3) to Data Warehouse via Stitch
+- Once loaded into warehouse, dbt performs transformations between the 3 layers
+	- "Bronze" raw layer (staging) - atomic data only / very minor and required clean up / typing
+	- "Silver" discovery layer - mix of denormalized fact based tables and normalized dimensional tables
+	- "Gold" BI layer - mix of OLAP cube and denormalized tables aggregated for insights / data consumer usage
+
+Modeling
+- How much self serve is the business capable of today? Drives modeling strategy
+- Will want to move towards self serve eventually - building data mart that allows for relational dimensional and fact structures to be joined and aggregated on by end state users
+
+Downstream
+- Looker sits on top of "Gold" BI layer where LookML is used to create a semantic layer / specific data sets for visualization
+- Data is piped out via Stitch reverse ETL to Meta Ads Manager and Google Ads for activation
+
+Additional / Future Considerations
+
+- Implement orchestration (dependent on how dbt is implemented - core vs cloud) - if core use Airflow for orchestration and backfill management
+- Implement data quality pipelines via Great Expectations module - expand and implement via existing Python scripts if using dbt core; build infrastructure via EC2 (ubuntu OS) to support Python scripts if using dbt cloud
+- Implement logging and collect pipeline metrics for observability; ff using dbt core - use Python logging module to record logs and write job states to warehouse for tracking; if using dbt cloud - use built in logging capabilities
+
+- Glue hosted (or any other host) PySpark for larger data volumes and flexibility (ex. Unpacking nested structures)
+- If there is a business need for real time data activation - look to implement Pub/Sub Glue streaming via PySpark with Kafka topic broking messages
+- "Lakehouse" design where S3 and "Bronze" raw warehouse layer are replaced with Apache Iceberg tables hosted in Snowflake; removes need for Warehouse Ingestion step

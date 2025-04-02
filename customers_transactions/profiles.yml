@@ -1,0 +1,7 @@
+main_db:
+  outputs:
+    dev:
+      path: /Users/coop/Desktop/dev_projects/trade_coffee/my_db.duckdb
+      threads: 2
+      type: duckdb
+  target: dev
