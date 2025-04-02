@@ -1,6 +1,6 @@
 ######## Part 1 Data Modeling for Cohort Analysis ########
 
-@@Note@@ see customers_transactions_data_models.ipynb notebook for workflow / customers_transactions_dbt for dbt project
+@@ Note @@ see customers_transactions_data_models.ipynb notebook for workflow / customers_transactions_dbt for dbt project
 
 Tooling
 - randomly generated raw data sets - customers / transactions / subscription_state_changes
