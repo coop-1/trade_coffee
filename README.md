@@ -9,7 +9,7 @@ Tooling
 
 Workflow
 - load raw data sets into duckdb tables
-- dbt models to build dim_customer_acquisition (dimensional table) and cube_customer_transaction_behavior tables (olap cube table)
+- dbt models to build `dim_customer_acquisition` (dimensional table) and `cube_customer_transaction_behavior` tables (olap cube table)
 
 Models
 - dim_customer_acquisition --> normalize customers across subs and non subs to show "points of entry" to Trade; ie. provides a lookup for customer acquisition
@@ -47,7 +47,7 @@ Attribution
 - Defined relation with reversal detail from transactions total --> ie. reversal_id
 
 Investigation / Process
-- Add discount_id / product_id / reversal_id to existing transactions data set
+- Add `discount_id` / `product_id` / `reversal_id` to existing transactions data set
 - Join on discount offerings metadata / profile metadata / reversals transactions detail
 - "True Up" the revenue to confirm net plus the above discounts match gross (assume gross sits in coffee profile metadata)
 - Join to cube_customer_transaction_behavior model
