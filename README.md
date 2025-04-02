@@ -1,6 +1,4 @@
-##########################################################
-Part 1 Data Modeling for Cohort Analysis
-##########################################################
+######## Part 1 Data Modeling for Cohort Analysis ########
 
 
 Tooling
@@ -17,9 +15,8 @@ Models
 - cube_customer_transaction_behavior --> table to allow for drill down / drill across aggregated transaction behavior; ie. we can identify users that were acquired via subscription a year ago that are still purchasing alacart or gifts
 
 
-##########################################################
-Part 2 Investigating Revenue Changes
-##########################################################
+######## Part 2 Investigating Revenue Changes ########
+
 
 "FP&A team has been able to identify that the net revenue in the first month of
 a customer’s lifetime has decreased significantly in the last year for customers acquired via subscription – in Q1 of 2025, the first month’s net revenue is $10, compared with $20 in Q1 of 2024.
@@ -58,9 +55,7 @@ Investigation / Process
 - Now having access to month over month discounts and subscription type (coffee profile metadata) will allow you to determine purchase trends
 
 
-##########################################################
-Part 3 Infrastructure Design
-##########################################################
+######## Part 3 Infrastructure Design ########
 
 
 ELT Medallion Architecture
