@@ -1,9 +1,9 @@
 ######## Part 1 Data Modeling for Cohort Analysis ########
 
-@@ Note @@ see customers_transactions_data_models.ipynb notebook for workflow / customers_transactions_dbt for dbt project
+@@ Note @@ see `customers_transactions_data_models.ipynb` notebook for workflow / `customers_transactions_dbt` directory for dbt project
 
 Tooling
-- randomly generated raw data sets - customers / transactions / subscription_state_changes
+- randomly generated raw data sets - `customers.cs` / `transactions.csv` / `subscription_state_changes.csv`
 - using duckdb to locally host db (in memory / persisted)
 - dbt for transformation on raw data sets
 
