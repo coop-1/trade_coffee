@@ -1,6 +1,6 @@
 ######## Part 1 Data Modeling for Cohort Analysis ########
 
-@@ Note @@ see `customers_transactions_data_models.ipynb` notebook for workflow / `customers_transactions_dbt` directory for dbt project
+See `customers_transactions_data_models.ipynb` notebook for workflow / `customers_transactions_dbt` directory for dbt project
 
 Tooling
 - randomly generated raw data sets - `customers.csv` / `transactions.csv` / `subscription_state_changes.csv`
@@ -18,6 +18,8 @@ Models
 
 ######## Part 2 Investigating Revenue Changes ########
 
+
+Link to architecture diagram - https://app.diagrams.net/#G1SPUpSJkXrPmBuDj541IwILHwZ45b6TpK#%7B%22pageId%22%3A%227DkG60gkg1tDCKLE-CPF%22%7D
 
 "FP&A team has been able to identify that the net revenue in the first month of
 a customer’s lifetime has decreased significantly in the last year for customers acquired via subscription – in Q1 of 2025, the first month’s net revenue is $10, compared with $20 in Q1 of 2024.
